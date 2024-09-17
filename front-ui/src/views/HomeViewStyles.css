@@ -1,0 +1,38 @@
+/* scoped表示样式只在当前组件中生效 */
+.block {
+    padding: 10px;
+}
+.login-box {
+    width: 200px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.el-menu{
+    font-weight: bold;
+}
+body {
+    background-color: aliceblue;
+}
+/* 在你的样式中添加以下CSS */
+.dialog-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center; /* 让按钮垂直居中 */
+    height: 100%; /* 使按钮高度与父容器高度一致 */
+}
+
+/* 可以为注册按钮添加一些额外的样式，例如右边距 */
+.register-link {
+    margin-right: 10px;
+    position: relative; /* 使用相对定位 */
+    top: 5px; /* 微调垂直位置 */
+}

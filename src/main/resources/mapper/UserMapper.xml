@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.smartagriculture.mapper.UserMapper">
+    <select id="findAll" resultType="com.example.smartagriculture.entity.User">
+        SELECT * FROM sys_user
+    </select>
+
+    <insert id="save">
+        INSERT INTO sys_user(username, password, nickname, email, phone, address)
+        VALUES(#{username}, #{password}, #{nickname}, #{email}, #{phone}, #{address})
+    </insert>
+
+    <update id="update">
+        UPDATE sys_user
+        <set>
+            <if test="username != null">username=#{username},</if>
+            <if test="password != null">password=#{password},</if>
+            <if test="nickname != null">nickname=#{nickname},</if>
+            <if test="email != null">email=#{email},</if>
+            <if test="phone != null">phone=#{phone},</if>
+            <if test="address != null">address=#{address}</if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM sys_user WHERE user_id=#{id}
+    </delete>
+
+    <select id="selectPage" resultType="com.example.smartagriculture.entity.User">
+        SELECT * FROM sys_user LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <select id="selectTotal" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM sys_user
+    </select>
+
+    <select id="findByUsername" resultType="com.example.smartagriculture.entity.User">
+        SELECT * FROM sys_user WHERE username = #{username}
+    </select>
+</mapper>
