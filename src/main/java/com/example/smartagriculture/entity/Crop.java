@@ -1,24 +1,17 @@
 package com.example.smartagriculture.entity;
 
-import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 
-@lombok.Data
-@Entity
-@Table(name = "Crops")
+@Data
 public class Crop {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "crop_id")
-    private Long id;
 
-    @Column(nullable = false)
+    private Integer id;
+
     private String cropName;
 
-    @Column(nullable = false)
     private LocalDate plantingDate;
 
-    @Column(nullable = false)
     private LocalDate expectedHarvestDate;
 }

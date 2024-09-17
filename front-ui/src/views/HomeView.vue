@@ -108,7 +108,7 @@
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header style="text-align: left; font-size: 12px; solid #ccc;">
+        <el-header style="text-align: left; font-size: 12px; solid: #ccc;">
           <div style="display: flex; align-items: center; margin-top: 12px">
             <img src="../../public/hhhh.png" height="70" width="275"/>
           </div>
@@ -239,12 +239,12 @@ export default {
               // 如果响应不是 200 OK，则抛出异常，进入下面的 catch 块
               throw new Error('Network response was not ok');
             }
-            // 返回响应的文本内容
-            return response.text();
+            // 返回响应的 JSON 数据
+            return response.json();
           })
           .then(data => {
             // 处理登录成功或失败的情况
-            if (data === '登录成功') {
+            if (data != null) {
               this.isLoggedIn = true; // 登录成功后设置状态
               // 登录成功
               this.loginSuccess = true;
@@ -254,7 +254,9 @@ export default {
               // 显示登录成功消息
               this.$message.success('登录成功！');
               // 假设后端返回的用户 ID 在 data.userId
-              const userId = data.userId;
+              const userId = data.id;
+              console.log('登录成功，用户 :', data);
+              console.log('登录成功，用户 ID:', userId);
               localStorage.setItem('userId', userId);  // 保存用户ID到本地存储
             } else {
               // 登录失败

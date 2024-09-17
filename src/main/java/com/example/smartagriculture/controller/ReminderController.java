@@ -1,7 +1,7 @@
 package com.example.smartagriculture.controller;
 
 import com.example.smartagriculture.entity.Reminder;
-import com.example.smartagriculture.service.ReminderService;
+import com.example.smartagriculture.service.impl.ReminderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import java.util.List;
 public class ReminderController {
 
     @Autowired
-    private ReminderService reminderService;
+    private ReminderServiceImpl reminderService;
 
     // 获取所有提醒
     @GetMapping
@@ -25,7 +25,7 @@ public class ReminderController {
 
     // 根据作物 ID 获取提醒
     @GetMapping("/crop/{cropId}")
-    public ResponseEntity<List<Reminder>> getRemindersByCropId(@PathVariable Long cropId) {
+    public ResponseEntity<List<Reminder>> getRemindersByCropId(@PathVariable Integer cropId) {
         List<Reminder> reminders = reminderService.getRemindersByCropId(cropId);
         return ResponseEntity.ok(reminders);
     }
@@ -46,7 +46,7 @@ public class ReminderController {
 
     // 更新提醒
     @PutMapping("/{id}")
-    public ResponseEntity<Reminder> updateReminder(@PathVariable Long id, @RequestBody Reminder reminderDetails) {
+    public ResponseEntity<Reminder> updateReminder(@PathVariable Integer id, @RequestBody Reminder reminderDetails) {
         try {
             Reminder updatedReminder = reminderService.updateReminder(id, reminderDetails);
             return ResponseEntity.ok(updatedReminder);
@@ -57,7 +57,7 @@ public class ReminderController {
 
     // 删除提醒
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReminder(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteReminder(@PathVariable Integer id) {
         reminderService.deleteReminder(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.smartagriculture.mapper.ReminderMapper">
+
+    <!-- 根据作物 ID 查找提醒 -->
+    <select id="findByCropId" resultType="com.example.smartagriculture.entity.Reminder">
+        SELECT * FROM reminders
+        WHERE crop_id = #{cropId}
+    </select>
+
+    <!-- 根据提醒状态查找提醒 -->
+    <select id="findByStatus" resultType="com.example.smartagriculture.entity.Reminder">
+        SELECT * FROM reminders
+        WHERE status = #{status}
+    </select>
+
+</mapper>
