@@ -1,41 +1,40 @@
 package com.example.smartagriculture.service;
 
 import com.example.smartagriculture.entity.Crop;
-import com.example.smartagriculture.repository.CropRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.*;
 
 import java.util.List;
 
-@Service
-public class CropService {
+public interface CropService {
 
-    @Autowired
-    private CropRepository cropRepository;
+    /**
+     * 获取所有作物
+     * @return 所有作物的列表
+     */
+    List<Crop> getAllCrops();
 
-    public List<Crop> getAllCrops() {
-        return cropRepository.findAll();
-    }
+    /**
+     * 根据ID获取作物
+     * @param id 作物的ID
+     * @return 对应ID的作物，若找不到则返回null
+     */
+    Crop getCropById(Integer id);
 
-    public Crop getCropById(Long id) {
-        return cropRepository.findById(id).orElse(null);
-    }
+    /**
+     * 创建新的作物
+     * @param crop 要创建的作物对象
+     */
+    void createCrop(Crop crop);
 
-    public Crop createCrop(Crop crop) {
-        return cropRepository.save(crop);
-    }
+    /**
+     * 根据ID删除作物
+     * @param id 作物的ID
+     */
+    void deleteCrop(Integer id);
 
-    public void deleteCrop(Long id) {
-        cropRepository.deleteById(id);
-    }
-
-    public Crop updateCrop(Long id, Crop newCropData) {
-        return cropRepository.findById(id).map(crop -> {
-            crop.setCropName(newCropData.getCropName());
-            crop.setPlantingDate(newCropData.getPlantingDate());
-            crop.setExpectedHarvestDate(newCropData.getExpectedHarvestDate());
-            return cropRepository.save(crop);
-        }).orElse(null);
-    }
+    /**
+     * 更新作物信息
+     * @param id 要更新的作物的ID
+     * @param newCropData 更新后的作物信息
+     */
+    void updateCrop(Integer id, Crop newCropData);
 }
-

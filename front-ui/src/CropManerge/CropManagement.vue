@@ -1,13 +1,13 @@
 <template>
   <div>
     <el-table :data="crops" border>
-      <el-table-column prop="crop.cropName" label="农作物名称"></el-table-column>
-      <el-table-column prop="crop.plantingDate" label="种植时间"></el-table-column>
-      <el-table-column prop="crop.expectedHarvestDate" label="预期成熟时间"></el-table-column>
+      <el-table-column prop="cropName" label="农作物名称"></el-table-column>
+      <el-table-column prop="plantingDate" label="种植时间"></el-table-column>
+      <el-table-column prop="expectedHarvestDate" label="预期成熟时间"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button @click="editCrop(scope.row)" size="small">修改</el-button>
-          <el-button @click="deleteCrop(scope.row.id)" size="small" type="danger">删除</el-button>
+          <el-button @click="confirmDelete(scope.row.id)" size="small" type="danger">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { MessageBox } from 'element-ui';
+
 export default {
   data() {
     return {
@@ -34,7 +36,7 @@ export default {
         console.error('用户ID未找到');
         return;
       }
-      fetch(`http://localhost:9090/api/user-crops/user/${userId}`, {
+      fetch(`http://localhost:9090/api/crops/user/${userId}`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}` // 如果需要身份验证
@@ -58,6 +60,20 @@ export default {
             console.error('获取农作物信息失败:', error);
           });
     },
+    confirmDelete(cropId) {
+      MessageBox.confirm('此操作将永久删除该农作物, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteCrop(cropId); // 用户确认后执行删除操作
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    },
     deleteCrop(cropId) {
       fetch(`http://localhost:9090/api/crops/${cropId}`, {
         method: 'DELETE',
@@ -67,16 +83,21 @@ export default {
       })
           .then(response => {
             if (response.ok) {
+              this.$message({
+                type: 'success',
+                message: '删除成功'
+              });
               this.fetchCrops(); // 刷新列表
             } else {
+              this.$message.error('删除农作物失败');
               console.error('删除农作物失败:', response.statusText);
             }
           })
           .catch(error => {
+            this.$message.error('删除农作物失败');
             console.error('删除农作物失败:', error);
           });
     }
   }
-
 };
 </script>

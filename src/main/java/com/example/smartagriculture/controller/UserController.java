@@ -2,7 +2,7 @@ package com.example.smartagriculture.controller;
 
 import com.example.smartagriculture.entity.User;
 import com.example.smartagriculture.mapper.UserMapper;
-import com.example.smartagriculture.service.UserService;
+import com.example.smartagriculture.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class UserController {
     private UserMapper userMapper;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     // 注册
     @PostMapping("/register")
@@ -43,16 +43,16 @@ public class UserController {
 
     //登录
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Map<String, String> request) {
+    public ResponseEntity<User> login(@RequestBody Map<String, String> request) {
         String username = request.get("username");
         String password = request.get("password");
 
         // 在 UserService 中实现登录逻辑
         User user = userService.login(username, password);
         if (user != null) {
-            return ResponseEntity.ok().body("登录成功");
+            return ResponseEntity.ok().body(user);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("用户名或密码错误");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 

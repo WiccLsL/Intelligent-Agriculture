@@ -24,7 +24,7 @@
     </update>
 
     <delete id="deleteById">
-        DELETE FROM sys_user WHERE user_id=#{id}
+        DELETE FROM sys_user WHERE id=#{id}
     </delete>
 
     <select id="selectPage" resultType="com.example.smartagriculture.entity.User">
