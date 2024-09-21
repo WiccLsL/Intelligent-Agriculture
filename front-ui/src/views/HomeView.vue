@@ -56,11 +56,11 @@
     <RegisterView v-if="showRegisterView" @close="handleRegisterClose" />
     <el-container style="height: 100vh;">
 
-      <el-aside height="900px" width="188px" style="background-color: #f0f0f0; border-radius: 30px;" class="menu-bar">
+      <el-aside height="900px" width="240px" style="border-radius: 30px;" class="menu-bar">
         <el-menu
             default-active="2"
             class="el-menu-vertical-demo"
-            background-color="#f0f0f0"
+            background-color=""
             text-color="black"
 
             active-text-color="#ffd04b">
@@ -72,10 +72,10 @@
             <el-menu-item-group>
               <template slot="title">Function</template>
               <el-menu-item index="1-1"><router-link to="/CropRecommendation" style="display: flex; align-items: center; color: inherit; text-decoration: none;">个性化种植</router-link></el-menu-item>
-              <el-menu-item index="1-2">气象预测</el-menu-item>
+              <el-menu-item index="1-2"><router-link to="/weather-forecast"style="display: flex; align-items: center; color: inherit; text-decoration: none;">气象监测</router-link></el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group title="OvO">
-              <el-menu-item index="1-3"><router-link to="/gao-de" style="display: flex; align-items: center; color: inherit; text-decoration: none;">提醒事项</router-link></el-menu-item>
+              <el-menu-item index="1-3"><router-link to="/geo" style="display: flex; align-items: center; color: inherit; text-decoration: none;">提醒事项</router-link></el-menu-item>
             </el-menu-item-group>
             <el-submenu index="1-4">
               <template slot="title">合作/帮助</template>
@@ -107,6 +107,7 @@
             <span slot="title">设置</span>
           </el-menu-item>
         </el-menu>
+
       </el-aside>
       <el-container>
         <el-header style="text-align: left; font-size: 12px; solid: #ccc;">
@@ -133,10 +134,20 @@
 <script>
 // 导入注册视图组件
 import RegisterView from './RegisterView.vue';
+import { EventBus } from '@/event-bus';
+import {mapGetters} from "vuex"; // 确保路径正确
+
 export default {
   name: 'HomeView',
   components: {
     RegisterView // 注册为 HomeView 的子组件
+  },
+  computed: {
+    ...mapGetters(['weatherInfo']),
+    handleCityData(data) {
+      const city = data.regeocode.addressComponent.city;
+      this.updateCity(city); // 保存城市信息到 Vuex
+    }
   },
   data() {
     return {
@@ -192,15 +203,110 @@ export default {
   mounted() {
     // 在 mounted 钩子中初始化地图
     this.initMap();
+    console.log('触发天气更新事件', this.weatherInfo);
   },
   methods: {
     // 初始化地图
     initMap() {
       const map = new AMap.Map('map', {
         center: [116.486409, 39.921489],
-        zoom: 12
+        zoom: 12,
+        viewMode: '3D'
       });
-      map.setMapStyle('amap://styles/light');
+      AMap.plugin('AMap.Geolocation', () => {
+        const geolocation = new AMap.Geolocation({
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
+          convert: true,
+          showMarker: true,
+          showCircle: true,
+          showButton: true,
+          buttonPosition: 'LB',
+          panToLocation: true,
+          zoomToAccuracy: true
+        });
+
+        map.addControl(geolocation);
+
+        geolocation.getCurrentPosition((result, error) => {
+          if (error) {
+            console.error('定位成功：', error);
+            const longitude = error.position.lng; // 获取经度
+            const latitude = error.position.lat;   // 获取纬度
+            console.log('经度:', longitude);
+            console.log('纬度:', latitude);
+            this.getWeather(longitude, latitude); // 获取天气数据
+            return;
+          }
+          console.log('定位成功：', result);
+          const longitude = result.position.lng; // 获取经度
+          const latitude = result.position.lat;   // 获取纬度
+          console.log('经度:', longitude);
+          console.log('纬度:', latitude);
+          this.getWeather(longitude, latitude); // 获取天气数据
+        });
+      });
+    },
+    getAddress(val) {
+      const self = this;
+      this.geocoder = new AMap.Geocoder({
+        city: "全国",
+        radius: 100,
+        extensions: "all",
+      });
+      this.geocoder.getAddress(val, function (status, result) {
+        console.log(result);
+        if (status === "complete" && result.info === "OK") {
+          if (result && result.regeocode) {
+            console.log(result.regeocode.formattedAddress);
+            self.address = result.regeocode.formattedAddress;
+            self.$emit("sendLoction", val, self.address);
+          }
+        }
+      });
+    },
+    async getCityCode(longitude, latitude) {
+
+      const key = '95b29a9f1632da3b258c93881dc0295c';
+      const url = `https://restapi.amap.com/v3/geocode/regeo?key=${key}&location=${longitude},${latitude}&extensions=all&radius=1000&output=json`;
+
+      console.log('请求的URL:', url); // 添加这一行以查看请求的URL
+
+      try {
+        const response = await fetch(url);
+        console.log('响应状态:', response.status); // 查看响应状态
+        const data = await response.json();
+        const city = data.regeocode.addressComponent.city.replace('市', '').trim();;
+        this.$store.dispatch('updateCity', city);
+        console.log('API 返回的城市:', city);
+        console.log('API 返回的完整数据:', data);
+
+        if (data.status === "1" && data.regeocode) {
+          const adcode = data.regeocode.addressComponent.adcode;
+          return adcode;
+        }
+        throw new Error('获取城市编码失败，状态码：' + data.status);
+      } catch (error) {
+        console.error('获取城市编码错误:', error);
+        throw error;
+      }
+    },
+    async getWeather(longitude, latitude) {
+      const key = '95b29a9f1632da3b258c93881dc0295c'; // 高德API密钥
+      const adcode = await this.getCityCode(longitude, latitude); // 获取城市编码
+      if (!adcode) {
+        console.error('无法获取城市编码，无法获取天气信息');
+        return;
+      }
+
+      const url = `https://restapi.amap.com/v3/weather/weatherInfo?key=${key}&city=${adcode}&extensions=all&output=json`;
+      const response = await fetch(url);
+      const data = await response.json();
+      this.weatherInfo = data.forecasts[0];
+      this.$store.dispatch('updateWeatherInfo', data.forecasts[0]);
+      console.log('天气信息:', data);
+
     },
     showLoginForm() {
       console.log("showLoginForm called");
