@@ -8,7 +8,9 @@ import PersonalizedPlanting from '@/views/PersonalizedPlanting.vue';
 import LatestNews from '@/views/LatestNews.vue';
 import CropRecommendation from '@/views/CropRecommendation.vue';
 import CropManagement from '@/CropManerge/CropManagement.vue';
-import PlantingPlan from '@/CropManerge/PlantingPlan.vue';
+import CropEdit from '@/CropManerge/CropEdit.vue'  // 你的编辑页面组件
+
+
 
 Vue.use(VueRouter)
 
@@ -52,10 +54,17 @@ const routes = [
     path: '/crop-management',
     name: 'CropManagement',
     component: CropManagement
-  }, {
-    path: '/planting-plan',
-    name: 'PlantingPlan',
-    component: PlantingPlan
+  },
+  {
+    path: '/edit-crop/:id',
+    name: 'CropEdit',
+    component: CropEdit,
+    props: true
+  },  {
+    path: '/Gao-de/:id',
+    name: 'Gaode',
+    component: Gaode,
+    props: true
   },
   {
     path: '/about',

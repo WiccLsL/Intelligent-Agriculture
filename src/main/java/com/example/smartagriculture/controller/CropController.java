@@ -5,6 +5,7 @@ import com.example.smartagriculture.entity.UserCrop;
 import com.example.smartagriculture.service.CropService;
 import com.example.smartagriculture.service.impl.UserCropServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,9 +32,15 @@ public class CropController {
     }
 
     @PostMapping
-    public void createCrop(@RequestBody Crop crop) {
-        cropService.createCrop(crop);
+    public ResponseEntity<Crop> createCrop(@RequestBody Crop crop) {
+        Crop createdCrop = cropService.createCrop(crop);
+        if (crop != null) {
+            return ResponseEntity.ok().body(crop);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
     }
+
 
     @PutMapping("/{id}")
     public void updateCrop(@PathVariable Integer id, @RequestBody Crop newCropData) {

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.smartagriculture.mapper.ReminderMapper">
+
+    <resultMap id="ReminderResultMap" type="com.example.smartagriculture.entity.Reminder">
+        <id property="id" column="id"/>
+        <result property="cropId" column="crop_id"/>
+        <result property="reminderMessage" column="reminder_message"/>
+        <result property="reminderDate" column="reminder_date"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <!-- 根据提醒 作物ID 查找提醒 -->
+    <select id="findByCropId" parameterType="integer" resultMap="ReminderResultMap">
+        SELECT * FROM reminders
+        WHERE crop_id = #{cropId}
+    </select>
+
+
+
+
+    <select id="findByStatus" resultMap="ReminderResultMap">
+        SELECT * FROM reminders
+        WHERE status = #{status}
+    </select>
+
+
+    <!-- 插入提醒 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO reminders (crop_id, reminder_message, reminder_date, status)
+        VALUES (#{cropId}, #{reminderMessage}, #{reminderDate}, #{status})
+    </insert>
+
+    <!-- 更新提醒 -->
+    <update id="update" parameterType="com.example.smartagriculture.entity.Reminder">
+        UPDATE reminders
+        SET reminder_message = #{reminderMessage},
+            reminder_date = #{reminderDate},
+            status = #{status}
+        WHERE crop_id = #{cropId}
+    </update>
+
+    <!-- 删除提醒 -->
+    <delete id="delete">
+        DELETE FROM reminders
+        WHERE id = #{id}
+    </delete>
+</mapper>

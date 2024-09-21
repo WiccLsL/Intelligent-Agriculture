@@ -6,14 +6,23 @@
         SELECT * FROM crops
     </select>
 
-    <select id="getCropById" parameterType="long" resultType="com.example.smartagriculture.entity.Crop">
+    <resultMap id="cropResultMap" type="com.example.smartagriculture.entity.Crop">
+        <result column="id" property="id"/>
+        <result column="crop_name" property="cropName"/>
+        <result column="planting_date" property="plantingDate"/>
+        <result column="expected_harvest_date" property="expectedHarvestDate"/>
+    </resultMap>
+
+    <select id="getCropById" parameterType="Integer" resultMap="cropResultMap">
         SELECT * FROM crops WHERE id = #{id}
     </select>
 
-    <insert id="createCrop" parameterType="com.example.smartagriculture.entity.Crop">
+
+    <insert id="createCrop" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO crops (crop_name, planting_date, expected_harvest_date)
         VALUES (#{cropName}, #{plantingDate}, #{expectedHarvestDate})
     </insert>
+
 
     <delete id="deleteCrop" parameterType="Integer">
         DELETE FROM crops WHERE id = #{id}

@@ -23,7 +23,7 @@ public interface CropService {
      * 创建新的作物
      * @param crop 要创建的作物对象
      */
-    void createCrop(Crop crop);
+    Crop createCrop(Crop crop);
 
     /**
      * 根据ID删除作物

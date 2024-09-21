@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/reminders")
-public class ReminderController {
+    public class ReminderController {
 
     @Autowired
     private ReminderServiceImpl reminderService;
@@ -23,10 +23,10 @@ public class ReminderController {
         return ResponseEntity.ok(reminders);
     }
 
-    // 根据作物 ID 获取提醒
-    @GetMapping("/crop/{cropId}")
-    public ResponseEntity<List<Reminder>> getRemindersByCropId(@PathVariable Integer cropId) {
-        List<Reminder> reminders = reminderService.getRemindersByCropId(cropId);
+    // 根据ID 获取提醒
+    @GetMapping("/{cropId}")
+    public ResponseEntity<List<Reminder>> getRemindersById(@PathVariable Integer cropId) {
+        List<Reminder> reminders = reminderService.getRemindersById(cropId);
         return ResponseEntity.ok(reminders);
     }
 
@@ -34,6 +34,7 @@ public class ReminderController {
     @GetMapping("/status/{status}")
     public ResponseEntity<List<Reminder>> getRemindersByStatus(@PathVariable String status) {
         List<Reminder> reminders = reminderService.getRemindersByStatus(status);
+        System.out.println("reminders: " + reminders);
         return ResponseEntity.ok(reminders);
     }
 
@@ -45,10 +46,10 @@ public class ReminderController {
     }
 
     // 更新提醒
-    @PutMapping("/{id}")
-    public ResponseEntity<Reminder> updateReminder(@PathVariable Integer id, @RequestBody Reminder reminderDetails) {
+    @PutMapping("/{cropId}")
+    public ResponseEntity<Reminder> updateReminder(@PathVariable Integer cropId, @RequestBody Reminder reminderDetails) {
         try {
-            Reminder updatedReminder = reminderService.updateReminder(id, reminderDetails);
+            Reminder updatedReminder = reminderService.updateReminder(cropId, reminderDetails);
             return ResponseEntity.ok(updatedReminder);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

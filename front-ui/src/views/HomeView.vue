@@ -55,6 +55,7 @@
     <!-- 注册视图组件 -->
     <RegisterView v-if="showRegisterView" @close="handleRegisterClose" />
     <el-container style="height: 100vh;">
+
       <el-aside height="900px" width="188px" style="background-color: #f0f0f0; border-radius: 30px;" class="menu-bar">
         <el-menu
             default-active="2"
@@ -74,7 +75,7 @@
               <el-menu-item index="1-2">气象预测</el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group title="OvO">
-              <el-menu-item index="1-3"><router-link to="/latest-news" style="display: flex; align-items: center; color: inherit; text-decoration: none;">最新消息</router-link></el-menu-item>
+              <el-menu-item index="1-3"><router-link to="/gao-de" style="display: flex; align-items: center; color: inherit; text-decoration: none;">提醒事项</router-link></el-menu-item>
             </el-menu-item-group>
             <el-submenu index="1-4">
               <template slot="title">合作/帮助</template>

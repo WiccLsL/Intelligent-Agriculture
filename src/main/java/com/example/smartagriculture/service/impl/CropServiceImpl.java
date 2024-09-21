@@ -27,8 +27,11 @@ public class CropServiceImpl implements CropService {
         return cropMapper.getCropById(id);
     }
 
-    public void createCrop(Crop crop) {
+    public Crop createCrop(Crop crop) {
         cropMapper.createCrop(crop);
+        System.out.println(crop);
+        return crop;
+
     }
 
     @Transactional(rollbackFor = Exception.class)

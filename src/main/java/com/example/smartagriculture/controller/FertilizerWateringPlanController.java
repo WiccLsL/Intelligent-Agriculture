@@ -25,9 +25,9 @@ public class FertilizerWateringPlanController {
     }
 
     // 通过ID获取单个计划
-    @GetMapping("/{id}")
-    public ResponseEntity<FertilizerWateringPlan> getPlanById(@PathVariable Integer id) {
-        Optional<FertilizerWateringPlan> plan = planService.getPlanById(id);
+    @GetMapping("/{cropId}")
+    public ResponseEntity<FertilizerWateringPlan> getPlanById(@PathVariable Integer cropId) {
+        Optional<FertilizerWateringPlan> plan = planService.getPlanById(cropId);
         return plan.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }

@@ -23,7 +23,7 @@
     <!-- 添加用户作物关系 -->
     <insert id="insertUserCrop">
         INSERT INTO user_crops (user_id, crop_id)
-        VALUES (#{user.id}, #{crop.id})
+        VALUES (#{userId}, #{cropId})
     </insert>
 
     <!-- 删除用户作物关系 -->

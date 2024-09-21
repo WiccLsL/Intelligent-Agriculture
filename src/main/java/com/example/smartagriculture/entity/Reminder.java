@@ -9,7 +9,7 @@ public class Reminder {
 
     private Integer id;
 
-    private Crop cropId;
+    private Integer cropId;  // 修改为 Integer 类型
 
     private String reminderMessage;
 

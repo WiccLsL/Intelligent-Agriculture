@@ -1,56 +1,67 @@
 <template>
-  <div>
-    <h1>作物推荐</h1>
-    <form @submit.prevent="getRecommendation">
-      <div>
-        <label for="N">氮含量 (N):</label>
-        <input type="number" id="N" v-model.number="inputData.N" required />
-      </div>
-      <div>
-        <label for="P">磷含量 (P):</label>
-        <input type="number" id="P" v-model.number="inputData.P" required />
-      </div>
-      <div>
-        <label for="K">钾含量 (K):</label>
-        <input type="number" id="K" v-model.number="inputData.K" required />
-      </div>
-      <div>
-        <label for="temperature">温度:</label>
-        <input type="number" id="temperature" v-model.number="inputData.temperature" step="0.1" required />
-      </div>
-      <div>
-        <label for="humidity">湿度:</label>
-        <input type="number" id="humidity" v-model.number="inputData.humidity" required />
-      </div>
-      <div>
-        <label for="ph">pH 值:</label>
-        <input type="number" id="ph" v-model.number="inputData.ph" step="0.1" required />
-      </div>
-      <div>
-        <label for="rainfall">降雨量:</label>
-        <input type="number" id="rainfall" v-model.number="inputData.rainfall" required />
-      </div>
-      <button type="submit">获取推荐</button>
-    </form>
-    <div v-if="recommendation">
-      <h2>推荐的作物: {{ recommendation }}</h2>
+  <div class="container">
+    <div class="hero">
+      <h1 class="hero-title">作物推荐系统</h1>
+      <p class="hero-subtitle">根据土壤和天气条件获取最佳作物推荐</p>
     </div>
 
-    <h2>实时天气查询</h2>
-    <div>
-      <label for="city">城市名:</label>
-      <input type="text" id="city" v-model="cityName" placeholder="输入城市名" />
-      <button @click="getWeather">获取天气</button>
+    <div class="form-section">
+      <h2>作物推荐</h2>
+      <form @submit.prevent="getRecommendation" class="form">
+        <div class="form-group">
+          <label for="N">氮含量 (N):</label>
+          <input type="number" id="N" v-model.number="inputData.N" required />
+        </div>
+        <div class="form-group">
+          <label for="P">磷含量 (P):</label>
+          <input type="number" id="P" v-model.number="inputData.P" required />
+        </div>
+        <div class="form-group">
+          <label for="K">钾含量 (K):</label>
+          <input type="number" id="K" v-model.number="inputData.K" required />
+        </div>
+        <div class="form-group">
+          <label for="temperature">温度:</label>
+          <input type="number" id="temperature" v-model.number="inputData.temperature" step="0.1" required />
+        </div>
+        <div class="form-group">
+          <label for="humidity">湿度:</label>
+          <input type="number" id="humidity" v-model.number="inputData.humidity" required />
+        </div>
+        <div class="form-group">
+          <label for="ph">pH 值:</label>
+          <input type="number" id="ph" v-model.number="inputData.ph" step="0.1" required />
+        </div>
+        <div class="form-group">
+          <label for="rainfall">降雨量:</label>
+          <input type="number" id="rainfall" v-model.number="inputData.rainfall" required />
+        </div>
+        <button type="submit" class="submit-btn">获取推荐</button>
+      </form>
+
+      <div v-if="recommendation" class="recommendation">
+        <h3>推荐的作物:</h3>
+        <p>{{ recommendation }}</p>
+      </div>
     </div>
-    <div v-if="weather">
-      <h3>天气数据</h3>
-      <p>温度: {{ weather.temperature }}°C</p>
-      <p>湿度: {{ weather.humidity }}%</p>
-      <p>风速: {{ weather.windSpeed}} m/s</p>
-      <p>天气状况: {{ weather.description }}</p>
+
+    <div class="weather-section">
+      <h2>实时天气查询</h2>
+      <div class="weather-form">
+        <input type="text" id="city" v-model="cityName" placeholder="输入城市名" />
+        <button @click="getWeather" class="weather-btn">获取天气</button>
+      </div>
+      <div v-if="weather" class="weather-data">
+        <h3>天气数据</h3>
+        <p>温度: {{ weather.temperature }}°C</p>
+        <p>湿度: {{ weather.humidity }}%</p>
+        <p>风速: {{ weather.windSpeed }} m/s</p>
+        <p>天气状况: {{ weather.description }}</p>
+      </div>
     </div>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -131,6 +142,141 @@ export default {
 };
 </script>
 
-<style scoped>
-/* 这里可以添加组件样式 */
+<<style scoped>
+.container {
+  max-width: 1800px;
+  margin: 100px auto;
+
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.hero {
+  background-image:linear-gradient(60deg,#abecd6 0%, #fbed96 100%) ;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  margin-top: 10px;
+}
+
+.form-section,
+.weather-section {
+  margin-bottom: 40px;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.submit-btn {
+  grid-column: span 2;
+  padding: 15px 25px;
+  background-image:linear-gradient(60deg,#64b3f4 0%, #c2e59c 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+.recommendation {
+  padding: 20px;
+  background-color: #e9f5f7;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.weather-form {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.weather-form input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.weather-btn {
+  padding: 15px 25px;
+  background-image:linear-gradient(60deg,#64b3f4 0%, #c2e59c 100%);  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.weather-btn:hover {
+  background-image:linear-gradient(60deg,#64b3f4 0%, #c2e59c 100%);}
+
+.weather-btn:active {
+  transform: scale(0.98);
+}
+
+.weather-data {
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.weather-data p {
+  margin: 10px 0;
+  font-size: 16px;
+}
 </style>

@@ -16,10 +16,10 @@ public interface FertilizerWateringPlanMapper {
 
     /**
      * 根据ID获取施肥浇水计划
-     * @param id 计划ID
+     * @param cropId 计划ID
      * @return 指定ID的施肥浇水计划
      */
-    FertilizerWateringPlan getPlanById(Integer id);
+    FertilizerWateringPlan getPlanById(Integer cropId);
 
     /**
      * 添加新的施肥浇水计划

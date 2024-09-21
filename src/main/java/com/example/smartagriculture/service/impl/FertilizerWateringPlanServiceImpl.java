@@ -21,8 +21,8 @@ public class FertilizerWateringPlanServiceImpl implements FertilizerWateringPlan
     }
 
     @Override
-    public Optional<FertilizerWateringPlan> getPlanById(Integer id) {
-        FertilizerWateringPlan plan = planMapper.getPlanById(id);
+    public Optional<FertilizerWateringPlan> getPlanById(Integer cropId) {
+        FertilizerWateringPlan plan = planMapper.getPlanById(cropId);
         return Optional.ofNullable(plan);
     }
 

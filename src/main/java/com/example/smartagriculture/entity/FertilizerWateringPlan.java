@@ -9,7 +9,7 @@ public class FertilizerWateringPlan {
 
     private Integer id;
 
-    private Crop cropId;
+    private Integer cropId;
 
     private String frequency;  // 频率（比如：每日、每周）
 

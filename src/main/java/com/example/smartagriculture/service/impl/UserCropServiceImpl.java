@@ -7,6 +7,7 @@ import com.example.smartagriculture.service.UserCropService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class UserCropServiceImpl implements UserCropService {
         return userCropMapper.findByUserId(userId);
     }
 
+    @Transactional
     @Override
     public void addUserCrop(UserCrop userCrop) {
         System.out.println("Received userCrop: " + userCrop);

@@ -9,25 +9,25 @@
     </select>
 
     <!-- 根据ID获取施肥浇水计划 -->
-    <select id="getPlanById" parameterType="Long" resultType="com.example.smartagriculture.entity.FertilizerWateringPlan">
-        SELECT * FROM fertilizer_watering_plans WHERE id = #{id}
+    <select id="getPlanById" parameterType="Integer" resultType="com.example.smartagriculture.entity.FertilizerWateringPlan">
+        SELECT * FROM fertilizer_watering_plans WHERE crop_id = #{cropId}
     </select>
 
     <!-- 添加新的施肥浇水计划 -->
     <insert id="addPlan" parameterType="com.example.smartagriculture.entity.FertilizerWateringPlan">
         INSERT INTO fertilizer_watering_plans (crop_id, frequency, time, conditions)
-        VALUES (#{crop.id}, #{frequency}, #{time}, #{conditions})
+        VALUES (#{cropId}, #{frequency}, #{time}, #{conditions})
     </insert>
 
     <!-- 更新施肥浇水计划 -->
     <update id="updatePlan" parameterType="com.example.smartagriculture.entity.FertilizerWateringPlan">
         UPDATE fertilizer_watering_plans
-        SET crop_id = #{crop.id}, frequency = #{frequency}, time = #{time}, conditions = #{conditions}
+        SET crop_id = #{cropId}, frequency = #{frequency}, time = #{time}, conditions = #{conditions}
         WHERE id = #{id}
     </update>
 
     <!-- 删除施肥浇水计划 -->
-    <delete id="deletePlan" parameterType="Long">
+    <delete id="deletePlan" parameterType="Integer">
         DELETE FROM fertilizer_watering_plans WHERE id = #{id}
     </delete>
 

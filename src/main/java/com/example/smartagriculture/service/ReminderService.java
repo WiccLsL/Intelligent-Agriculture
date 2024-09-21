@@ -1,6 +1,8 @@
 package com.example.smartagriculture.service;
 
 import com.example.smartagriculture.entity.Reminder;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
 
@@ -8,7 +10,7 @@ public interface ReminderService {
 
     List<Reminder> getAllReminders();
 
-    List<Reminder> getRemindersByCropId(Integer cropId);
+    List<Reminder> getRemindersById(Integer cropId);
 
     List<Reminder> getRemindersByStatus(String status);
 
@@ -18,6 +20,6 @@ public interface ReminderService {
 
     void deleteReminder(Integer id);
 
-    // 可选：定义用于调度的接口方法（如果需要）
-    void checkReminders();
+
+
 }
