@@ -40,30 +40,29 @@
       </div>
       </div>
     </div>
-
     <div class="right-panel">
-      <div class="weather-warning" v-if="warningData.length > 0">
+      <div class="weather-warning">
         <h3>灾害预警信息</h3>
-        <div v-for="(warning, index) in warningData" :key="index" class="warning-item">
-          <div class="warning-title">{{ warning.title }}</div>
-          <div class="warning-level">预警等级: <span :style="{ color: warning.severityColor }">{{ warning.level }}</span></div>
-          <div class="warning-time">
-            <span>发布时间: {{ warning.pubTime }}</span>
-            <span>有效期: {{ warning.startTime }} - {{ warning.endTime }}</span>
-          </div>
-          <div class="warning-text">{{ warning.text }}</div>
+        <div v-if="warningData.length === 0" class="no-warning">
+          今日无灾害
         </div>
-
-    </div>
+        <div v-else>
+          <div v-for="(warning, index) in warningData" :key="index" class="warning-item">
+            <div class="warning-title">{{ warning.title }}</div>
+            <div class="warning-level">预警等级: <span :style="{ color: warning.severityColor }">{{ warning.level }}</span></div>
+            <div class="warning-time">
+              <span>发布时间: {{ warning.pubTime }}</span>
+              <span>有效期: {{ warning.startTime }} - {{ warning.endTime }}</span>
+            </div>
+            <div class="warning-text">{{ warning.text }}</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
-
-
-
-
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters} from 'vuex';
 import axios from "axios";
 export default {
   data() {
@@ -72,17 +71,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['city', 'weatherInfo', 'weatherWarning']),
+    ...mapGetters([ 'weatherInfo']),
   },
-  methods: {
-    // 获取灾害预警信息
-    // 获取灾害预警信息
+  methods: {// 获取灾害预警信息
     async fetchWeatherWarning() {
       const locationId = "118.68,32.16";
       try {
         const warningResponse = await axios.get(`https://devapi.qweather.com/v7/warning/now?location=${locationId}&key=729b0f51f42c44d2863bf51887f44cc3`);
         this.warningData = warningResponse.data.warning || []; // 使用 this 访问 warningData
-        console.log(this.warningData); // 调试输出
+        console.log('获取灾害预警信息成功', this.warningData); // 调试输出
       } catch (error) {
         console.error('获取灾害预警信息失败', error);
       }

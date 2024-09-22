@@ -24,7 +24,7 @@
     </select>
 
     <!-- 添加新的施肥浇水计划 -->
-    <insert id="addPlan" parameterType="com.example.smartagriculture.entity.FertilizerWateringPlan">
+    <insert id="addPlan" parameterType="com.example.smartagriculture.entity.FertilizerWateringPlan" >
         INSERT INTO fertilizer_watering_plans (crop_id, frequency, time, conditions)
         VALUES (#{cropId}, #{frequency}, #{time}, #{conditions})
     </insert>

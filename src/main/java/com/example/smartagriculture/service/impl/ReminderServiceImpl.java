@@ -39,13 +39,22 @@ public class ReminderServiceImpl implements ReminderService {
         }
         return reminderDate.isBefore(now);
     }
-
+    @Override
+    public List<Reminder> getTodaysReminders() {
+        LocalDateTime startOfDay = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0);
+        LocalDateTime endOfDay = LocalDateTime.now().withHour(23).withMinute(59).withSecond(59);
+        return reminderMapper.findByDateRange(startOfDay, endOfDay);
+    }
 
     private void triggerReminder(Reminder reminder) {
         // 实现触发提醒的逻辑
         System.out.println("Reminder triggered: " + reminder.getReminderMessage());
     }
 
+    @Override
+    public List<Reminder> getTodayReminders(Integer cropId) {
+        return reminderMapper.findTodayReminders(cropId);
+    }
 
     @Override
     public List<Reminder> getAllReminders() {

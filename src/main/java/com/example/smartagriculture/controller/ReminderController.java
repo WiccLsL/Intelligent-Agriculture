@@ -23,6 +23,11 @@ import java.util.List;
         return ResponseEntity.ok(reminders);
     }
 
+    @GetMapping("/today")
+    public List<Reminder> getTodaysReminders() {
+        return reminderService.getTodaysReminders();
+    }
+
     // 根据ID 获取提醒
     @GetMapping("/{cropId}")
     public ResponseEntity<List<Reminder>> getRemindersById(@PathVariable Integer cropId) {

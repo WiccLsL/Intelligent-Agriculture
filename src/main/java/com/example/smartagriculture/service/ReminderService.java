@@ -15,9 +15,9 @@ public interface ReminderService {
     List<Reminder> getRemindersByStatus(String status);
 
     Reminder addReminder(Reminder reminder);
-
+    List<Reminder> getTodaysReminders();
     Reminder updateReminder(Integer id, Reminder reminderDetails);
-
+    List<Reminder> getTodayReminders(Integer cropId);
     void deleteReminder(Integer id);
 
 

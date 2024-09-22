@@ -224,7 +224,10 @@ export default {
       this.isFertilizerPlanDialogVisible = true;
     },
     updateFertilizerPlan() {
-      axios.put(`http://localhost:9090/api/fertilizer-watering-plans/${this.currentFertilizerPlan.id}`, this.currentFertilizerPlan)
+      // 格式化时间为 HH:mm
+      const formattedTime = moment(this.currentFertilizerPlan.time).format('HH:mm');
+      axios.put(`http://localhost:9090/api/fertilizer-watering-plans/${this.currentFertilizerPlan.id}`, {...this.currentFertilizerPlan,
+        cropId: this.id, time: formattedTime })
           .then(() => {
             this.loadFertilizerPlans();
             this.isFertilizerPlanDialogVisible = false;
@@ -235,16 +238,27 @@ export default {
           });
     },
     addFertilizerPlan() {
-      axios.post(`http://localhost:9090/api/fertilizer-watering-plans`, { ...this.newFertilizerPlan, cropId: this.id })
+      // 格式化时间为 HH:mm
+      const formattedTime = moment(this.newFertilizerPlan.time).format('HH:mm');
+
+      // 发送 POST 请求
+      axios.post(`http://localhost:9090/api/fertilizer-watering-plans`, {
+        ...this.newFertilizerPlan,
+        cropId: this.id,
+        time: formattedTime // 使用格式化后的时间
+      })
           .then(() => {
-            this.loadFertilizerPlans();
-            this.isAddFertilizerPlanDialogVisible = false;
-            this.$message.success('施肥计划添加成功');
+            this.loadFertilizerPlans(); // 刷新施肥计划列表
+            console.log(this.newFertilizerPlan);
+            this.isAddFertilizerPlanDialogVisible = false; // 关闭对话框
+            this.$message.success('施肥计划添加成功'); // 成功提示
           })
           .catch(error => {
-            console.error("添加施肥计划失败", error);
+            console.error("添加施肥计划失败", error); // 错误提示
           });
     },
+
+
     deleteReminder(id) {
       axios.delete(`http://localhost:9090/api/reminders/${id}`)
           .then(() => {
@@ -284,6 +298,8 @@ export default {
     save() {
       // 保存农作物信息的逻辑
       console.log('保存农作物信息', this.crop);
+      this.$message.success('保存农作物信息成功');
+
     }
   }
 }

@@ -35,7 +35,7 @@ public class FertilizerWateringPlanController {
 
     // 添加新计划
     @PostMapping
-    public ResponseEntity<FertilizerWateringPlan> createPlan(@RequestBody FertilizerWateringPlan plan) {
+    public ResponseEntity<FertilizerWateringPlan> addPlan(@RequestBody FertilizerWateringPlan plan) {
         FertilizerWateringPlan createdPlan = planService.addPlan(plan);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPlan);
     }

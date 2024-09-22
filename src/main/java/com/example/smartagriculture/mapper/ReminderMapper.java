@@ -3,6 +3,7 @@ package com.example.smartagriculture.mapper;
 import com.example.smartagriculture.entity.Reminder;
 import org.apache.ibatis.annotations.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -15,7 +16,9 @@ public interface ReminderMapper {
 
     void insert(Reminder reminder);
 
-
+    List<Reminder> findByDateRange(LocalDateTime startDate, LocalDateTime endDate);
+    // 获取今日的提醒任务
+    List<Reminder> findTodayReminders(@Param("cropId") Integer cropId);
 
     void update(Reminder reminder);
     void delete(Integer id);

@@ -50,4 +50,17 @@
         DELETE FROM reminders
         WHERE id = #{id}
     </delete>
+
+    <select id="findByDateRange" resultMap="ReminderResultMap">
+        SELECT * FROM reminders
+        WHERE reminder_date BETWEEN #{startDate} AND #{endDate}
+    </select>
+
+    <select id="findTodayReminders" resultMap="ReminderResultMap">
+        SELECT *
+        FROM reminders
+        WHERE crop_id = #{cropId}
+          AND reminder_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+    </select>
+
 </mapper>
