@@ -9,7 +9,9 @@ public interface FertilizerWateringPlanService {
 
     List<FertilizerWateringPlan> getAllPlans();
 
-    Optional<FertilizerWateringPlan> getPlanById(Integer cropId);
+    List<FertilizerWateringPlan> getPlanByCropId(Integer cropId);
+
+    Optional<FertilizerWateringPlan> getPlanById(Integer id);
 
     FertilizerWateringPlan addPlan(FertilizerWateringPlan plan);
 

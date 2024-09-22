@@ -239,12 +239,7 @@ export default {
             this.getWeather(longitude, latitude); // 获取天气数据
             return;
           }
-          console.log('定位成功：', result);
-          const longitude = result.position.lng; // 获取经度
-          const latitude = result.position.lat;   // 获取纬度
-          console.log('经度:', longitude);
-          console.log('纬度:', latitude);
-          this.getWeather(longitude, latitude); // 获取天气数据
+
         });
       });
     },
@@ -308,6 +303,7 @@ export default {
       console.log('天气信息:', data);
 
     },
+
     showLoginForm() {
       console.log("showLoginForm called");
       this.loginDialogVisible = true;

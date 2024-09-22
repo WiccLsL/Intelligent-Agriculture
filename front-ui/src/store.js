@@ -27,25 +27,6 @@ const store = new Vuex.Store({
         updateWeatherInfo({ commit }, weatherInfo) {
             commit('setWeatherInfo', weatherInfo);
         },
-        // 更新城市信息
-        updateCity({ commit }, city) {
-            commit('setCity', city);
-        },
-        // 获取灾害预警信息
-        async fetchWeatherWarning(city) {
-            try {
-                const geoResponse = await axios.get(`https://devapi.qweather.com/v7/geocode/geo?location=${encodeURIComponent(city)}&key=729b0f51f42c44d2863bf51887f44cc3`);
-                const locationId = geoResponse.data.location[0].id;
-
-                const warningResponse = await axios.get(`https://devapi.qweather.com/v7/warning/now?location=${locationId}&key=729b0f51f42c44d2863bf51887f44cc3`);
-                if (warningResponse.data.code === '200') {
-                    commit('setWeatherWarning', warningResponse.data.warning);
-                }
-            } catch (error) {
-                console.error('获取灾害预警信息失败', error);
-            }
-        }
-
     },
     getters: {
         weatherInfo: (state) => state.weatherInfo,

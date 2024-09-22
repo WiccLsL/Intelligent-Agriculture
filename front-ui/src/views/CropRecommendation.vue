@@ -45,20 +45,6 @@
       </div>
     </div>
 
-    <div class="weather-section">
-      <h2>实时天气查询</h2>
-      <div class="weather-form">
-        <input type="text" id="city" v-model="cityName" placeholder="输入城市名" />
-        <button @click="getWeather" class="weather-btn">获取天气</button>
-      </div>
-      <div v-if="weather" class="weather-data">
-        <h3>天气数据</h3>
-        <p>温度: {{ weather.temperature }}°C</p>
-        <p>湿度: {{ weather.humidity }}%</p>
-        <p>风速: {{ weather.windSpeed }} m/s</p>
-        <p>天气状况: {{ weather.description }}</p>
-      </div>
-    </div>
   </div>
 </template>
 

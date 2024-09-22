@@ -1,0 +1,143 @@
+.weather-info {
+    margin-left: 400px; /* 右侧外边距 */
+    margin-top: 300px; /* 上边距 */
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    background-image:linear-gradient(0deg,#505285 0%, #585e92 12%, #65689f 25%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.weather-info h3 {
+    font-size: 24px;
+        color: #333;
+    margin-bottom: 16px;
+}
+
+.loc {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.date {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.weather {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.temperature {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.temperature i {
+    margin-right: 5px;
+
+}
+.weather-warning h3 {
+    font-size: 24px; /* 较大的标题字体 */
+    color: #333; /* 深色标题 */
+    font-weight: 500; /* 加粗 */
+    margin-bottom: 10px; /* 调整底部间距 */
+    font-weight: normal; /* 普通字体 */
+    text-align: center; /* 中心对齐 */
+}
+
+.warning-title {
+    font-size: 18px; /* 中等大小的警告标题 */
+    font-weight: bold; /* 加粗 */
+    color: #333; /* 鲜艳的红色 */
+    margin: 8px 0; /* 上下边距 */
+}
+
+.warning-text {
+    color: #555; /* 深灰色文本 */
+    font-size: 16px; /* 较小的文本字体 */
+    line-height: 1.5; /* 行高 */
+    margin-top: 5px; /* 顶部间距 */
+    background-image:linear-gradient(0deg,#a7a6cb 0%, #8989ba 52%, #8989ba 100%); /* 浅灰色背景 */
+    padding: 10px; /* 内边距 */
+    border-radius: 5px; /* 圆角 */
+}
+.warning-level{
+    font-size: 15px; /* 较小的文本字体 */
+}
+.warning-time{
+    font-size: 15px; /* 较小的文本字体 */
+
+}
+.warning-item {
+    border-bottom: 1px solid #e0e0e0; /* 分隔线 */
+    padding: 10px 0; /* 上下内边距 */
+}
+
+.warning-item:last-child {
+    border-bottom: none; /* 去掉最后一项的分隔线 */
+}
+
+.forecast-item {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0;
+}
+
+.forecast-item:last-child {
+    border-bottom: none;
+}
+
+.date {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.weather, .temperature {
+    display: inline-block;
+    margin-right: 15px; /* 控制间距 */
+    font-size: 16px;
+}
+.weather-warning {
+    margin-left: 100px; /* 右侧外边距 */
+    margin-top: 300px; /* 上边距 */
+    background-color: #ffffff; /* 白色背景 */
+    border: 1px solid #e0e0e0; /* 灰色边框 */
+    border-radius: 8px; /* 圆角 */
+    padding: 15px; /* 内边距 */
+    margin-bottom: 20px; /* 下边距 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 微弱阴影 */
+}
+.container {
+    display: flex; /* 使用 Flexbox 布局 */
+    background-image:linear-gradient(-20deg,#2b5876 0%, #4e4376 100%); /* 设置背景颜色 */
+    height: 100vh; /* 设置高度 */
+}
+.left-panel {
+    flex: 0.06 0 50%; /* 左侧占 72% */
+
+
+}
+
+.right-panel {
+    flex: 0 0 28%; /* 右侧占 28% */
+}
+.weather-warning {
+    background-image:linear-gradient(-20deg,#2b5876 0%, #4e4376 100%); /* 白色背景 */
+    border: 1px solid #e0e0e0; /* 灰色边框 */
+    border-radius: 8px; /* 圆角 */
+    padding: 15px; /* 内边距 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 微弱阴影 */
+}
+
+.weather-info, .warning-item {
+    margin-bottom: 20px; /* 下边距 */
+}

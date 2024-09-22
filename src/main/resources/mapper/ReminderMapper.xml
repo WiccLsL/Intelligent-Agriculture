@@ -16,6 +16,10 @@
         SELECT * FROM reminders
         WHERE crop_id = #{cropId}
     </select>
+    <select id="findById" parameterType="integer" resultMap="ReminderResultMap">
+        SELECT * FROM reminders
+        WHERE id = #{id}
+    </select>
 
 
 
@@ -38,7 +42,7 @@
         SET reminder_message = #{reminderMessage},
             reminder_date = #{reminderDate},
             status = #{status}
-        WHERE crop_id = #{cropId}
+        WHERE id = #{id}
     </update>
 
     <!-- 删除提醒 -->

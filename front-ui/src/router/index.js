@@ -7,8 +7,10 @@ import Declaration from '@/views/Declaration.vue';
 import PersonalizedPlanting from '@/views/PersonalizedPlanting.vue';
 import LatestNews from '@/views/LatestNews.vue';
 import CropRecommendation from '@/views/CropRecommendation.vue';
+import CropEdit from '@/CropManerge/CropEdit.vue';
 import CropManagement from '@/CropManerge/CropManagement.vue';
 import WeatherForecast from '@/views/WeatherForecast.vue';
+
 
 Vue.use(VueRouter);
 
@@ -22,6 +24,7 @@ const routes = [
   { path: '/declaration', name: 'Declaration', component: Declaration },
   { path: '/cropRecommendation', name: 'CropRecommendation', component: CropRecommendation },
   { path: '/crop-management', name: 'CropManagement', component: CropManagement },
+  { path: '/crop-edit/:id', name: 'CropEdit', component: CropEdit,props: true },
   { path: '/weather-forecast', name: 'WeatherForecast', component: WeatherForecast },
   { path: '/about', name: 'about', component: () => import(/* webpackChunkName: "about" */ '../views/LoginDialog.vue') }
 ];

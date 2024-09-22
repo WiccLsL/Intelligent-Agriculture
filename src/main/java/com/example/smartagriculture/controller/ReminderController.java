@@ -46,10 +46,10 @@ import java.util.List;
     }
 
     // 更新提醒
-    @PutMapping("/{cropId}")
-    public ResponseEntity<Reminder> updateReminder(@PathVariable Integer cropId, @RequestBody Reminder reminderDetails) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Reminder> updateReminder(@PathVariable Integer id, @RequestBody Reminder reminderDetails) {
         try {
-            Reminder updatedReminder = reminderService.updateReminder(cropId, reminderDetails);
+            Reminder updatedReminder = reminderService.updateReminder(id, reminderDetails);
             return ResponseEntity.ok(updatedReminder);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

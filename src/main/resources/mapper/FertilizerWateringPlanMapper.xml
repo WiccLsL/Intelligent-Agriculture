@@ -8,9 +8,19 @@
         SELECT * FROM fertilizer_watering_plans
     </select>
 
+    <resultMap id="FertilizerWateringPlanMap" type="com.example.smartagriculture.entity.FertilizerWateringPlan">
+        <id property="id" column="id" />
+        <result property="cropId" column="crop_id" />
+        <result property="frequency" column="frequency" />
+        <result property="time" column="time" />
+        <result property="conditions" column="conditions" />
+    </resultMap>
     <!-- 根据ID获取施肥浇水计划 -->
-    <select id="getPlanById" parameterType="Integer" resultType="com.example.smartagriculture.entity.FertilizerWateringPlan">
+    <select id="getPlanByCropId" parameterType="Integer" resultMap="FertilizerWateringPlanMap">
         SELECT * FROM fertilizer_watering_plans WHERE crop_id = #{cropId}
+    </select>
+    <select id="getPlanById" parameterType="Integer" resultType="com.example.smartagriculture.entity.FertilizerWateringPlan">
+        SELECT * FROM fertilizer_watering_plans WHERE id = #{id}
     </select>
 
     <!-- 添加新的施肥浇水计划 -->
@@ -22,7 +32,7 @@
     <!-- 更新施肥浇水计划 -->
     <update id="updatePlan" parameterType="com.example.smartagriculture.entity.FertilizerWateringPlan">
         UPDATE fertilizer_watering_plans
-        SET crop_id = #{cropId}, frequency = #{frequency}, time = #{time}, conditions = #{conditions}
+        SET  frequency = #{frequency}, time = #{time}, conditions = #{conditions}
         WHERE id = #{id}
     </update>
 

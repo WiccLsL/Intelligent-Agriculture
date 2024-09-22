@@ -24,13 +24,14 @@ public class FertilizerWateringPlanController {
         return ResponseEntity.ok(plans);
     }
 
-    // 通过ID获取单个计划
+    // 通过ID获取
     @GetMapping("/{cropId}")
-    public ResponseEntity<FertilizerWateringPlan> getPlanById(@PathVariable Integer cropId) {
-        Optional<FertilizerWateringPlan> plan = planService.getPlanById(cropId);
-        return plan.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    public ResponseEntity<List<FertilizerWateringPlan>> getPlanByCropId(@PathVariable Integer cropId) {
+        List<FertilizerWateringPlan> plans = planService.getPlanByCropId(cropId);
+        return ResponseEntity.ok(plans);
     }
+
+
 
     // 添加新计划
     @PostMapping

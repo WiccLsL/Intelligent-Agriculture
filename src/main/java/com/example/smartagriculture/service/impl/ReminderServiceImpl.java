@@ -72,18 +72,27 @@ public class ReminderServiceImpl implements ReminderService {
     }
 
     @Override
-    public Reminder updateReminder(Integer cropId, Reminder reminderDetails) {
-        Reminder existingReminder = (Reminder) reminderMapper.findByCropId(cropId); // 假设有一个根据 ID 查找提醒的方法
-        if (existingReminder != null) {
-            existingReminder.setReminderMessage(reminderDetails.getReminderMessage());
-            existingReminder.setReminderDate(reminderDetails.getReminderDate());
-            existingReminder.setStatus(reminderDetails.getStatus());
-            reminderMapper.update(existingReminder); // 传递整个 Reminder 对象
+    public Reminder updateReminder(Integer id, Reminder reminderDetails) {
+        Reminder existingReminder = reminderMapper.findById(id); // 确保这个方法返回单个 Reminder
+
+        if (existingReminder == null) {
+            throw new RuntimeException("Reminder with id " + id + " not found");
+        }
+
+        // 更新提醒的属性
+        existingReminder.setReminderMessage(reminderDetails.getReminderMessage());
+        existingReminder.setReminderDate(reminderDetails.getReminderDate());
+        existingReminder.setStatus(reminderDetails.getStatus());
+
+        try {
+            reminderMapper.update(existingReminder); // 更新数据库
             return existingReminder;
-        } else {
-            throw new RuntimeException("Reminder with id " + cropId + " not found");
+        } catch (Exception e) {
+            throw new RuntimeException("Update failed: " + e.getMessage());
         }
     }
+
+
 
     @Override
     public void deleteReminder(Integer id) {

@@ -1,0 +1,48 @@
+.crop-edit-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;
+    padding: 20px;
+}
+
+.crop-info {
+    flex: 0 0 auto;
+}
+
+.button-center {
+    flex: 0 0 auto;
+    margin: 20px 0;
+}
+
+.plans-reminders {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.fertilizer-plans, .reminders {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.fertilizer-plans:last-child, .reminders:last-child {
+    margin-right: 0;
+}
+.crop-info {
+    display: flex;
+    flex-direction: column; /* 让整个表单垂直排列 */
+}
+
+.form-row {
+    display: flex; /* 使表单项横向排列 */
+    justify-content: space-between; /* 设置项之间的间距 */
+}
+
+.form-item {
+    margin-right: 20px; /* 每个表单项之间的右边距 */
+}
+
+.form-item:last-child {
+    margin-right: 200px; /* 最后一个表单项不需要右边距 */
+}

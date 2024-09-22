@@ -1,9 +1,11 @@
 <template>
-  <div>
+  <div class="container">
+    <div class="left-panel">
     <div class="weather-info" v-if="weatherInfo">
+      <h3 class="header">实时天气及未来三天预测</h3>
       <div class="loc">{{ weatherInfo.city }}</div>
 
-      <div v-for="(cast, index) in weatherInfo.casts" :key="index">
+      <div v-for="(cast, index) in weatherInfo.casts" :key="index" class="forecast-item">
         <div class="date">{{ cast.date }}</div>
         <div class="weather">
           <i v-if="cast.dayweather === '晴'" class="el-icon-sunny"></i>
@@ -36,33 +38,59 @@
           夜间风力: {{ cast.nightpower }}级
         </div>
       </div>
-      <div v-if="weatherWarning.length > 0">
-        <h3>灾害预警</h3>
-        <ul>
-          <li v-for="(warning, index) in weatherWarning" :key="index">{{ warning.text }}</li>
-        </ul>
       </div>
     </div>
-  </div>
 
+    <div class="right-panel">
+      <div class="weather-warning" v-if="warningData.length > 0">
+        <h3>灾害预警信息</h3>
+        <div v-for="(warning, index) in warningData" :key="index" class="warning-item">
+          <div class="warning-title">{{ warning.title }}</div>
+          <div class="warning-level">预警等级: <span :style="{ color: warning.severityColor }">{{ warning.level }}</span></div>
+          <div class="warning-time">
+            <span>发布时间: {{ warning.pubTime }}</span>
+            <span>有效期: {{ warning.startTime }} - {{ warning.endTime }}</span>
+          </div>
+          <div class="warning-text">{{ warning.text }}</div>
+        </div>
+
+    </div>
+    </div>
+  </div>
 </template>
+
+
+
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import axios from "axios";
 export default {
+  data() {
+    return {
+      warningData: [],
+    };
+  },
   computed: {
     ...mapGetters(['city', 'weatherInfo', 'weatherWarning']),
   },
   methods: {
-    ...mapActions(['fetchWeatherWarning']),
+    // 获取灾害预警信息
+    // 获取灾害预警信息
+    async fetchWeatherWarning() {
+      const locationId = "118.68,32.16";
+      try {
+        const warningResponse = await axios.get(`https://devapi.qweather.com/v7/warning/now?location=${locationId}&key=729b0f51f42c44d2863bf51887f44cc3`);
+        this.warningData = warningResponse.data.warning || []; // 使用 this 访问 warningData
+        console.log(this.warningData); // 调试输出
+      } catch (error) {
+        console.error('获取灾害预警信息失败', error);
+      }
+    }
   },
   mounted() {
-    const city = "南京"; // 这里的 city 是一个字符串
-    console.log("组件中 city 的值:", city); // 确保输出的是字符串
-    this.fetchWeatherWarning(city); // 调用获取预警信息
-  }
+    this.fetchWeatherWarning(); // 调用获取预警信息
+  },
 };
 </script>
-<style scoped>
-/* 在这里添加样式 */
-</style>
+<style scoped src="./WeatherForecast.css"></style>

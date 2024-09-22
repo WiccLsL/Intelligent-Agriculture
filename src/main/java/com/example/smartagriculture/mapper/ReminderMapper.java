@@ -8,6 +8,7 @@ import java.util.List;
 @Mapper
 public interface ReminderMapper {
 
+    Reminder findById(Integer id);
     List<Reminder> findByCropId(Integer cropId);
 
     List<Reminder> findByStatus(String status);
